@@ -18,6 +18,10 @@ public class EmergencyNetwork {
         edges.put(node.id, new ArrayList<>());
     }
 
+    public Set<String> getAllNodeIds() {
+        return new HashSet<>(nodes.keySet());
+    }
+
     public void addEdge(GraphEdge edge) {
         edges.get(edge.fromId).add(edge);
         edges.get(edge.toId).add(new GraphEdge(edge.toId, edge.fromId, edge.weight));
