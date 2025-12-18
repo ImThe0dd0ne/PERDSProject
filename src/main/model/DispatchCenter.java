@@ -2,7 +2,10 @@ package main.model;
 
 import main.graph.EmergencyNetwork;
 import main.graph.GraphNode;
+import main.prediction.DemandPredictor;
 import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 // DispatchCenter - manages all the emergency responses
 public class DispatchCenter {
@@ -18,12 +21,16 @@ public class DispatchCenter {
     // The road network for routing
     private EmergencyNetwork network;
 
+    // Predictive analysis for hotspots
+    private DemandPredictor predictor;
+
     // Constructor
     public DispatchCenter() {
         unitMap = new HashMap<>();
         incidentMap = new HashMap<>();
         pendingQueue = new ArrayList<>();
         network = new EmergencyNetwork();
+        predictor = new DemandPredictor(50);  // track last 50 incidents
     }
 
     // Adds a unit to the system
@@ -52,6 +59,9 @@ public class DispatchCenter {
         incidentMap.put(id, inc);
         pendingQueue.add(inc);
 
+        // log this incident for prediction analysis
+        predictor.logIncident(loc);
+
         System.out.println("Reported: " + type + " incident at " + loc);
 
         // Tries to send someone straight away
@@ -60,7 +70,7 @@ public class DispatchCenter {
         return id;
     }
 
-    // My dispatch algorithm but ill improve it later on
+    // My dispatch algorithm
     private void dispatchIfPossible() {
         // A check for free units
         ArrayList<ResponseUnit> freeUnits = new ArrayList<>();
@@ -158,6 +168,16 @@ public class DispatchCenter {
         return unitMap.size();
     }
 
+    // Get predicted hotspot area
+    public Location getPredictedHotspot() {
+        return predictor.predict();
+    }
+
+    // Get how many incidents are being tracked for predictions
+    public int getPredictionDataSize() {
+        return predictor.getIncidentCount();
+    }
+
     // Helper to print status
     public void printStats() {
         System.out.println("\n--- Dispatch Center Stats ---");
@@ -165,5 +185,14 @@ public class DispatchCenter {
                 getAvailableUnitCount() + " available");
         System.out.println("Incidents: " + getActiveIncidentCount() + " active");
         System.out.println("Pending assignments: " + pendingQueue.size());
+
+        // Show prediction info
+        Location hotspot = getPredictedHotspot();
+        if (hotspot != null) {
+            System.out.println("Predicted hotspot: " + hotspot.getLatitude() + ", " + hotspot.getLongitude());
+        } else {
+            System.out.println("Predicted hotspot: Not enough data yet");
+        }
+        System.out.println("Tracking " + getPredictionDataSize() + " incidents for predictions");
     }
 }
