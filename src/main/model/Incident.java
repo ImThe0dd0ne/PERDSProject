@@ -6,7 +6,7 @@ public class Incident {
     private String id;
     private Location location;
     private String type; // "fire", "medical", "police"
-    private int severity; // 1-5, 5 = most severe
+    private int severity; // 1-5, 5 = being the most severe
     private LocalDateTime reportedTime;
     private boolean active;
     private String assignedUnitId;

@@ -3,7 +3,6 @@ package main.graph;
 import main.model.Location;
 import java.util.*;
 
-// My first graph implementation with an adjacency list
 public class EmergencyNetwork {
     private Map<String, GraphNode> nodes;
     private Map<String, List<GraphEdge>> edges;

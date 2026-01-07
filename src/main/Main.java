@@ -7,18 +7,18 @@ import main.prediction.DemandPredictor;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("PERDS System test \n");
+        System.out.println("Here is my PERDS System test \n");
 
-        // Test 1: All of the Core Components
+        // Test 1: All of the core components
         testLocation();
 
-        // Test 2: Incidents & Units
+        // Test 2: Incidents and units
         testIncidents();
 
-        // Test 3: Graph & Pathfinding
+        // Test 3: Graph and pathfinding
         testGraphPathfinding();
 
-        // Test 4: Full Dispatch with Priority Queue
+        // Test 4: Full Dispatch with priority queue
         testFullDispatch();
 
         // Test 5: Predictive system
@@ -31,17 +31,17 @@ public class Main {
     }
 
     static void testLocation() {
-        System.out.println("[Test 1/6] Location & Distance Calculation");
+        System.out.println("Test 1 of 6 Location and Distance Calculation");
         Location london = new Location(51.5074, -0.1278);
         Location manchester = new Location(53.4809, -2.2426);
 
         double distance = london.distanceTo(manchester);
-        System.out.println("   London → Manchester: " + String.format("%.1f", distance) + " km");
+        System.out.println("   London to Manchester: " + String.format("%.1f", distance) + " km");
         System.out.println("   Haversine formula working correctly\n");
     }
 
     static void testIncidents() {
-        System.out.println("[Test 2/6] Incident & Response Unit Management");
+        System.out.println("Test 2 of 6 Incident & Response Unit Management");
 
         Incident fire = new Incident(new Location(51.5, -0.1), "FIRE", 9);
         ResponseUnit truck = new ResponseUnit("FIRE01", "FIRE_TRUCK", new Location(51.51, -0.09));
@@ -58,11 +58,11 @@ public class Main {
     }
 
     static void testGraphPathfinding() {
-        System.out.println("[Test 3/6] Graph Network & Dijkstra Algorithm");
+        System.out.println("Test 3 of 6 Graph Network & Dijkstra Algorithm");
 
         EmergencyNetwork net = new EmergencyNetwork();
 
-        // Create city network
+        // The cities network is created
         GraphNode[] cities = {
                 new GraphNode("LDN", "London", new Location(51.5074, -0.1278), GraphNode.NodeType.CITY),
                 new GraphNode("BIR", "Birmingham", new Location(52.4862, -1.8904), GraphNode.NodeType.CITY),
@@ -72,7 +72,7 @@ public class Main {
 
         for (GraphNode city : cities) net.addNode(city);
 
-        // Connect with approximate road distances
+        // Connecting with approximate road distances
         net.addEdge(new GraphEdge("LDN", "BIR", 190.0));
         net.addEdge(new GraphEdge("BIR", "MAN", 120.0));
         net.addEdge(new GraphEdge("MAN", "LEE", 65.0));
@@ -89,7 +89,7 @@ public class Main {
     }
 
     static void testFullDispatch() {
-        System.out.println("[Test 4/6] Priority Dispatch System");
+        System.out.println("Test 4 of 6 Priority Dispatch System");
 
         DispatchCenter dc = new DispatchCenter();
 
@@ -100,7 +100,7 @@ public class Main {
 
         System.out.println("   Registered 3 units: Ambulance, Fire Truck, Police Car");
 
-        // Report incidents - should use PRIORITY QUEUE scoring
+        // Report incidents - should use the priority queue scoring
         String medicalId = dc.reportIncident(new Location(51.511, -0.125), "MEDICAL", 8);
         String fireId = dc.reportIncident(new Location(51.521, -0.135), "FIRE", 9);
 
@@ -115,17 +115,16 @@ public class Main {
     }
 
     static void testPredictiveSystem() {
-        System.out.println("[Test 5/6] Predictive Analytics (First Class Feature)");
+        System.out.println("Test 5 of 6 Predictive Analytics");
 
-        DemandPredictor predictor = new DemandPredictor(10); // Track last 10 incidents
+        DemandPredictor predictor = new DemandPredictor(10); // Here is tracking of the last 10 incidents
 
-        // Simulate incident cluster in London area
+        // Simulation of an incident cluster in the area of London
         for (int i = 0; i < 5; i++) {
             predictor.logIncident(new Location(51.51 + (Math.random() * 0.02),
                     -0.12 + (Math.random() * 0.02)));
         }
 
-        // Add a few scattered incidents
         predictor.logIncident(new Location(51.60, -0.20));
         predictor.logIncident(new Location(51.40, -0.05));
 
@@ -133,17 +132,16 @@ public class Main {
         if (hotspot != null) {
             System.out.println("   Predicted hotspot: " + hotspot);
             System.out.println("   Incidents analyzed: " + predictor.getIncidentCount());
-            System.out.println("   Grid-based clustering prediction working\n");
+            System.out.println("   Grid-based clustering prediction is working\n");
         }
     }
 
     static void testCompleteIntegration() {
-        System.out.println("[Test 6/6] Complete System Integration");
-        System.out.println("   Demonstrating all First Class features together:\n");
+        System.out.println("Test 6 of 6 Complete System Integration");
 
         DispatchCenter system = new DispatchCenter();
 
-        // Setup network with units
+        // Setup the network with units
         ResponseUnit[] units = {
                 new ResponseUnit("AMB1", "AMBULANCE", new Location(51.507, -0.127)),
                 new ResponseUnit("FIR1", "FIRE_TRUCK", new Location(51.515, -0.140)),
@@ -152,7 +150,7 @@ public class Main {
 
         for (ResponseUnit unit : units) system.registerUnit(unit);
 
-        System.out.println("   1. Reporting incidents (triggers predictive tracking)..");
+        System.out.println("   1. Reporting incidents (triggers predictive tracking)");
 
         // Incident wave
         String[] incidents = {
@@ -161,7 +159,7 @@ public class Main {
                 system.reportIncident(new Location(51.508, -0.125), "POLICE", 6)
         };
 
-        System.out.println("   2. Checking predictive hotspot..");
+        System.out.println("   2. Checking predictive hotspot....");
         Location prediction = system.getPredictedHotspot();
         System.out.println("      Predicted area: " + prediction);
 
@@ -169,7 +167,7 @@ public class Main {
         System.out.println("      Active incidents: " + system.getActiveIncidentCount());
         System.out.println("      Available units: " + system.getAvailableUnitCount());
 
-        System.out.println("   4. Resolving incidents...");
+        System.out.println("   4. Resolving incidents....");
         for (String id : incidents) {
             system.resolveIncident(id);
         }
